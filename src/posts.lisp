@@ -4,8 +4,9 @@
   ((title  :initarg :title  :reader title-of)
    (author :initarg :author :reader author-of)
    (excerpt :initarg :excerpt :reader excerpt-of)
-   (format :initarg :format :reader post-format))
-  (:default-initargs :author nil :excerpt nil))
+   (format :initarg :format :reader post-format)
+   (toot :initarg :toot :reader toot))
+  (:default-initargs :author nil :excerpt nil :toot nil))
 
 (defmethod initialize-instance :after ((object post) &key)
   (with-slots (url title author excerpt format text) object
