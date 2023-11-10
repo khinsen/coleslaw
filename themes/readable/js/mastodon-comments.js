@@ -35,7 +35,7 @@ function emojify(input, emojis) {
 function loadComments() {
   let commentsWrapper = document.getElementById("comments-wrapper");
   document.getElementById("load-comment").innerHTML = "Loading";
-  fetch(url.href + 'api/v1/statuses/' + tootId + '/context')
+  fetch(tootUrl.href + 'api/v1/statuses/' + tootId + '/context')
     .then(function(response) {
       return response.json();
     })
@@ -61,7 +61,7 @@ function loadComments() {
           if( status.account.acct.includes("@") ) {
             instance = status.account.acct.split("@")[1];
           } else {
-            instance = url.hostname;
+            instance = tootUrl.hostname;
           }
 
           const isReply = status.in_reply_to_id !== tootId;
