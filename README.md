@@ -1,5 +1,8 @@
 # coleslaw
 
+**Fork note:** This is my personal fork, which mainly adds a comment-via-Mastodon feature, and tweaks the URLs to match those of the generator I used before (Frog). Once comments-via-Mastodon work to my satisfaction, I will see if I can refactor this feature as a plugin and submit it upstream. For now, consider this fork under construction and use at your own risk.
+
+
 [![Build Status](https://travis-ci.org/coleslaw-org/coleslaw.svg?branch=master)](https://travis-ci.org/kingcons/coleslaw)
 [![Quicklisp](http://quickdocs.org/badge/coleslaw.svg)](http://quickdocs.org/coleslaw/)
 
