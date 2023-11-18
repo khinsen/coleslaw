@@ -46,7 +46,9 @@
                                     (if (< (index-name a) (index-name b))
                                         a b))
                                 (find-all 'numeric-index))))
-      (update-symlink "index.html" (page-url recent-posts)))))
+      (cl-fad:copy-file (merge-pathnames (page-url recent-posts) staging)
+                        (merge-pathnames "index.html" staging)
+                        :overwrite t))))
 
 (defgeneric deploy (staging)
   (:documentation "Deploy the STAGING build to the directory specified in the config.")
