@@ -4,6 +4,7 @@
    #:copy-theme
    #:setup
    #:new
+   #:new-post
    #:generate
    #:preview
    #:watch
@@ -124,6 +125,50 @@ Excerpt separator is `<!--more-->` by default.
                    (string= type "page") name
                    sep)
            (format *error-output* "~&Created a ~a \"~a\".~%" type name)
+           (format t "~&~a~%" path)
+           path))))))
+
+(defun new-post (title)
+  (let* ((config (read-rc))
+         (sep (getf config :separator ";;;;;"))
+         (excerpt-sep (getf config :excerpt-sep "<!--more-->")))
+    (multiple-value-match (get-decoded-time)
+      ((second minute hour date month year _ _ _)
+       (let* ((name (format nil "~a-~2,,,'0@a-~2,,,'0@a-~a"
+                            year month date
+                            (coleslaw:slugify title)))
+              (path (merge-pathnames (make-pathname :name name :type "post"))))
+         (with-open-file (s path
+                            :direction :output
+                            :if-exists :error
+                            :if-does-not-exist :create)
+           (format s "~
+~a
+title: ~a
+tags: bar, baz
+date: ~a-~2,,,'0@a-~2,,,'0@a ~2,,,'0@a:~2,,,'0@a:~2,,,'0@a
+format: md
+~a
+
+<!-- **** your post here (remove this line) **** -->
+<!-- format: could be 'html' (for raw html) or 'md' (for markdown).  -->
+
+First paragraph
+
+~a
+
+More paragraphs
+
+<!-- Local Variables: -->
+<!-- mode: markdown -->
+<!-- End: -->
+"
+                   sep
+                   title
+                   year month date hour minute second
+                   sep
+                   excerpt-sep)
+           (format *error-output* "~&Created a post \"~a\".~%" name)
            (format t "~&~a~%" path)
            path))))))
 
