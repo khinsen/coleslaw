@@ -4,6 +4,8 @@
   (:import-from :coleslaw #:*config*
                           #:assert-field
                           #:content
+                          #:content-file
+                          #:compute-url
                           #:find-all
                           #:render
                           #:publish
@@ -21,9 +23,9 @@
 
 (defmethod initialize-instance :after ((object page) &key)
   (assert-field 'title object)
-  (assert-field 'coleslaw::url object)
+  ;; (assert-field 'coleslaw::url object)
   (with-slots (coleslaw::url coleslaw::text format title) object
-    (setf coleslaw::url (make-pathname :defaults coleslaw::url)
+    (setf coleslaw::url (compute-url object (pathname-name (content-file object)))
           format (alexandria:make-keyword (string-upcase format))
           coleslaw::text (render-text coleslaw::text format))))
 
