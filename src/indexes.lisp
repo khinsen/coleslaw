@@ -36,7 +36,7 @@
   "Return an index of all CONTENT matching the given TAG."
   (make-instance 'tag-index :slug (tag-slug tag) :name (tag-name tag)
                  :content (remove-if-not (lambda (x) (tag-p tag x)) content)
-                 :title (format nil "Content tagged ~a" (tag-name tag))))
+                 :title (format nil "Posts tagged ~a" (tag-name tag))))
 
 (defmethod publish ((doc-type (eql (find-class 'tag-index))))
   (dolist (index (find-all 'tag-index))
@@ -55,7 +55,7 @@
   "Return an index of all CONTENT matching the given MONTH."
   (make-instance 'month-index :slug month :name month
                  :content (remove-if-not (lambda (x) (month-p month x)) content)
-                 :title (format nil "Content from ~a" month)))
+                 :title (format nil "Posts from ~a" month)))
 
 (defmethod publish ((doc-type (eql (find-class 'month-index))))
   (dolist (index (find-all 'month-index))
@@ -75,7 +75,7 @@
   (let ((content (subseq content (* 10 i))))
     (make-instance 'numeric-index :slug (1+ i) :name (1+ i)
                    :content (take-up-to 10 content)
-                   :title "Recent Content")))
+                   :title "Recent posts")))
 
 (defmethod publish ((doc-type (eql (find-class 'numeric-index))))
   (let ((indexes (sort (find-all 'numeric-index) #'< :key #'index-name)))
