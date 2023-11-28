@@ -88,6 +88,9 @@
       (let ((metadata (parse-metadata in))
             (content (slurp-remainder in))
             (filepath (enough-namestring file (repo-dir *config*))))
+        ;; discard the time part of the date
+        (setf (getf metadata :date)
+              (first (uiop:split-string (getf metadata :date))))
         (append metadata (list :text content :file filepath))))))
 
 ;; Helper Functions
